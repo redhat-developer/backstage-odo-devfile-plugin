@@ -1,1 +1,4 @@
-export { devfileSelectorExtensionPlugin, DevfileSelectorFieldExtension } from './plugin';
+export {
+  devfileSelectorExtensionPlugin,
+  DevfileSelectorFieldExtension,
+} from "./plugin";
