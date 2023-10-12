@@ -7,13 +7,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useApi, configApiRef } from "@backstage/core-plugin-api";
 
 const DevfileSelectorExtensionWithOptionsFieldSchema = makeFieldSchemaFromZod(
-  z.string(),
-  z.object({
-    registry_url: z
-      .string()
-      .default("/default-devfile-registry")
-      .describe("Registry URL (as proxied in the Backstage config)."),
-  })
+  z.string()
 );
 
 export const DevfileSelectorExtensionWithOptionsSchema =
@@ -29,15 +23,14 @@ export const DevfileSelectorExtension = ({
   formData,
   idSchema,
   schema: { title, description },
-  uiSchema: { "ui:options": options },
 }: DevfileSelectorExtensionWithOptionsProps) => {
   const config = useApi(configApiRef);
   const [loading, setLoading] = useState(true);
   const [formDataOptions, setFormDataOptions] = useState([]);
 
   const backendUrl = config.getString("backend.baseUrl");
-  const registryBaseUrl = options?.registry_url ?? "/default-devfile-registry";
-  const registryApiEndpoint = `${backendUrl}/api/proxy${registryBaseUrl}/v2index`;
+  // This requires a proxy endpoint to be added for /devfile-registry
+  const registryApiEndpoint = `${backendUrl}/api/proxy/devfile-registry/v2index`;
 
   useAsync(async () => {
     const req = await fetch(registryApiEndpoint, {
