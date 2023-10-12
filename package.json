@@ -5,13 +5,16 @@
   "types": "src/index.ts",
   "license": "Apache-2.0",
   "private": true,
-  "publishConfig": {
-    "access": "public",
-    "main": "dist/index.esm.js",
-    "types": "dist/index.d.ts"
+  "engines": {
+    "node": "18"
   },
   "backstage": {
     "role": "web-library"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   },
   "sideEffects": false,
   "scripts": {
@@ -26,8 +29,5 @@
   "devDependencies": {
     "@backstage/cli": "^0.22.13",
     "@testing-library/jest-dom": "^5.10.1"
-  },
-  "files": [
-    "dist"
-  ]
+  }
 }
