@@ -85,8 +85,8 @@ You can use the action in any of the steps of your Software Template. It can be 
 
 ```yaml
   steps:
-    - id: odo-analyze
-      name: Execute odo
+    - id: generic-odo-command
+      name: Execute odo command
       action: devfile:odo:command
       input:
         command: ${{ parameters.command }} # e.g.: 'analyze'
