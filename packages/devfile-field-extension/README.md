@@ -40,6 +40,8 @@ import { ScaffolderFieldExtensions } from '@backstage/plugin-scaffolder-react';
 3. This custom field extension populates the dropdown lists from a Devfile Registry, which is expected to be proxied by Backstage at the following path: `/devfile-registry`. As such, you need to add the appropriate configuration to your `app-config.yaml` file under the `proxy.endpoints` field, like so:
 
 ```yaml
+# app-config.yaml
+
 proxy:
   endpoints:
     '/devfile-registry':
