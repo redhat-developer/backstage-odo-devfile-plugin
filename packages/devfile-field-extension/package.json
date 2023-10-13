@@ -57,13 +57,13 @@
     "plugin",
     "devfile"
   ],
-  "author": "Red Hat",
+  "author": "rm3l",
   "homepage": "https://devfile.io",
   "bugs": {
-    "url": "https://github.com/rm3l/plugin-scaffolder-frontend-module-devfile-field/issues"
+    "url": "https://github.com/rm3l/backstage-odo-devfile-plugin/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rm3l/plugin-scaffolder-frontend-module-devfile-field.git"
+    "url": "git+https://github.com/rm3l/backstage-odo-devfile-plugin.git"
   }
 }
