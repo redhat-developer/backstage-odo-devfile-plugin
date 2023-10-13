@@ -1,6 +1,6 @@
 {
   "name": "@rm3l/plugin-scaffolder-frontend-module-devfile-field",
-  "version": "0.5.0-36",
+  "version": "0.6.0",
   "main": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "license": "Apache-2.0",

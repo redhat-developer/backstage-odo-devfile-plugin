@@ -1,6 +1,6 @@
 {
   "name": "@rm3l/plugin-scaffolder-odo-actions",
-  "version": "0.5.0-36",
+  "version": "0.6.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "license": "Apache-2.0",
