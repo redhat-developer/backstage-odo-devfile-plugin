@@ -11,7 +11,8 @@ It contains the following actions:
 
 ## Preview
 
-![image](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/ef342f15-ed2b-448c-9024-52ddf1f2453c)
+![Screenshot from 2023-10-13 14-44-52](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/713abb47-5875-45ce-a591-1f0d0b30859e)
+
 
 ## Installation
 
