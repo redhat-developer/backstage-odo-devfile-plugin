@@ -5,7 +5,7 @@ It interacts with the configured [Devfile registry](https://registry.devfile.io/
 
 ## Preview
 
-![image](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/7d549b38-4107-4b28-8abe-8d647140eb4e)
+![Screenshot from 2023-10-13 14-13-10](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/3a107db0-4aef-42f7-bfb2-6e463373b906)
 
 ## Installation
 
