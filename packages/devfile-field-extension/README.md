@@ -19,6 +19,8 @@ yarn add --cwd packages/app @rm3l/plugin-scaffolder-frontend-module-devfile-fiel
 1. Add the import to your `packages/app/src/App.tsx` on the frontend package of your Backstage instance:
 
 ```js
+// packages/app/src/App.tsx
+
 import { DevfileSelectorFieldExtension } from '@rm3l/plugin-scaffolder-frontend-module-devfile-field';
 import { ScaffolderFieldExtensions } from '@backstage/plugin-scaffolder-react';
 ```
@@ -26,6 +28,8 @@ import { ScaffolderFieldExtensions } from '@backstage/plugin-scaffolder-react';
 2. Then add the imported field extension as a child of `ScaffolderFieldExtensions` inside `Route`, like so:
 
 ```js
+// packages/app/src/App.tsx
+
 <Route path="/create" element={<ScaffolderPage />}>
   <ScaffolderFieldExtensions>
     <DevfileSelectorFieldExtension />
