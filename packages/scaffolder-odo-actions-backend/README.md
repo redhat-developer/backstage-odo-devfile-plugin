@@ -61,15 +61,40 @@ return await createRouter({
 
 You should now see the custom `devfile:odo:*` actions if you navigate to the Actions page at http://localhost:3000/create/actions.
 
-![image](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/5c1a5871-9944-4d92-aeb1-4e8682c7aa4e)
+![Screenshot from 2023-10-13 14-55-08](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/91c12cb1-261e-44b9-9311-3dbe84ce3b47)
+
 
 ## Usage
 
-You can use the action in any of the steps of your Software Template. It can be used in conjunction with the [devfile-field-extension](../devfile-field-extension) Custom Field Extension to get the Devfile input data from the end-user.
+You can use the action in any of the steps of your Software Template.
 
 ### Example with the `odo init` action
 
+This action can be used in conjunction with the [devfile-field-extension](../devfile-field-extension) Custom Field Extension to get the Devfile input data from the end-user, e.g.:
+
 ```yaml
+spec:
+  parameters:
+
+    - title: Provide details about the Devfile
+      required:
+        - devfile_data
+      properties:
+        devfile_data:
+          type: object
+          required:
+            - devfile
+            - version
+            - starter_project
+          properties:
+            devfile:
+              type: string
+            version:
+              type: string
+            starter_project:
+              type: string
+          ui:field: DevfileSelectorExtension
+
   steps:
     - id: odo-init
       name: Generate
@@ -85,6 +110,9 @@ You can use the action in any of the steps of your Software Template. It can be 
 ### Example with the generic `odo` action
 
 ```yaml
+spec:
+  # [...]
+
   steps:
     - id: generic-odo-command
       name: Execute odo command
