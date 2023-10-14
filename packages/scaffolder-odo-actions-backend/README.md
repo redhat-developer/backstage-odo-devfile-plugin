@@ -118,7 +118,7 @@ spec:
       action: devfile:odo:command
       input:
         command: ${{ parameters.command }} # e.g.: 'analyze'
-        name: ${{ parameters.args }} # e.g.: ['-o', 'json']
+        args: ${{ parameters.args }} # e.g.: ['-o', 'json']
         telemetry: ${{ parameters.telemetry }}
 ```
 
