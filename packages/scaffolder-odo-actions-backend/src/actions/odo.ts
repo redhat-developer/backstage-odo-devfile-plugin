@@ -26,7 +26,8 @@ export const odoAction = () => {
             items: {
               type: "string",
             },
-            title: "Arguments to pass to the command",
+            title: "Arguments",
+            description: "Arguments to pass to the command",
           },
           telemetry: {
             type: "boolean",
