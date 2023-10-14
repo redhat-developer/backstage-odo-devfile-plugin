@@ -3,16 +3,15 @@
 This is a [Backend Plugin](https://backstage.io/docs/plugins/backend-plugin/) containing a set of [Custom Actions](https://backstage.io/docs/features/software-templates/writing-custom-actions) using the [`odo`](https://odo.dev/) CLI.
 It contains the following actions:
 - `devfile:odo:command`: a generic action that can execute any `odo` command from the scaffolder workspace.
-- `devfile:odo:component:init`: allows to execute the [`odo init`](https://odo.dev/docs/command-reference/init) from the scaffolder workspace. The goal of this action is to generate a starter project for a given Devfile that can be customized later on.
+- `devfile:odo:component:init`: allows to execute the [`odo init`](https://odo.dev/docs/command-reference/init) command from the scaffolder workspace. The goal of this action is to generate a starter project for a given Devfile that can be customized later on.
 
 ## Prerequisites
 
-- `odo` must be installed in the environment your Backstage is running in. See https://odo.dev/docs/overview/installation for more details.
+- `odo` must be installed in the environment your Backstage instance is running in. See https://odo.dev/docs/overview/installation for more details.
 
 ## Preview
 
 ![Screenshot from 2023-10-13 14-44-52](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/713abb47-5875-45ce-a591-1f0d0b30859e)
-
 
 ## Installation
 
