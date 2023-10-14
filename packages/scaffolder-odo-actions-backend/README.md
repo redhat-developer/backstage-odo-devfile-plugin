@@ -32,7 +32,7 @@ import { ScmIntegrations } from '@backstage/integration';
 import { odoInitAction, odoAction } from '@rm3l/plugin-scaffolder-odo-actions';
 ```
 
-2. Then add the imported actions to the built-in actions and pass them to the `createRouter` function. You should end up with something like this in the end:
+2. Then pass the imported actions along with the built-in ones to the `createRouter` function. You should end up with something like this in the end:
 
 ```js
 // packages/backend/src/plugins/scaffolder.ts
