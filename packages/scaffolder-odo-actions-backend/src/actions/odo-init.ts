@@ -64,6 +64,7 @@ export const odoInitAction = () => {
         ctx.input.starter_project,
       ];
 
+      // TODO(rm3l): Find a way to pass the ODO_TRACKING_CONSENT env var instead. Could not get env vars to work with executeShellCommand..
       await Promise.all([
         executeShellCommand({
             command: "odo",
