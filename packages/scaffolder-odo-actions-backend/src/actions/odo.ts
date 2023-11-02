@@ -2,13 +2,13 @@ import {
   createTemplateAction,
   executeShellCommand,
 } from "@backstage/plugin-scaffolder-node";
+import { Config } from '@backstage/config'
 
-export const odoAction = () => {
+export const odoAction = (config: Config) => {
   return createTemplateAction<{
     workingDirectory: string;
     command: string;
     args: string[];
-    telemetry: boolean,
   }>({
     id: "devfile:odo:command",
     schema: {
@@ -28,13 +28,7 @@ export const odoAction = () => {
             },
             title: "Arguments",
             description: "Arguments to pass to the command",
-          },
-          telemetry: {
-            type: "boolean",
-            title: "Enable Telemetry",
-            default: false,
-            description: "Whether to enable odo telemetry",
-          },
+          }
         },
       },
     },
@@ -44,11 +38,19 @@ export const odoAction = () => {
         args = [...args, ...ctx.input.args];
       }
 
+      ctx.logger.info(`Workspace: "${ctx.workspacePath}"`);
+      ctx.logger.info(
+        `Running ${args}...`
+      );
+
+      const telemetryDisabled = config.getOptionalBoolean('odo.telemetry.disabled') ?? false;
+      ctx.logger.info(`...telemetry disabled: ${telemetryDisabled}`);
+
       // TODO(rm3l): Find a way to pass the ODO_TRACKING_CONSENT env var instead. Could not get env vars to work with executeShellCommand..
       await Promise.all([
         executeShellCommand({
             command: "odo",
-            args: ["preference", "set", "ConsentTelemetry", ctx.input.telemetry ? "true" : "false", "--force"],
+            args: ["preference", "set", "ConsentTelemetry", telemetryDisabled ? "false" : "true", "--force"],
             logStream: ctx.logStream,
             options: {
               cwd: ctx.workspacePath,

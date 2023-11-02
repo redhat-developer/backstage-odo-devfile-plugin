@@ -1,6 +1,6 @@
-export declare const odoAction: () => import("@backstage/plugin-scaffolder-node").TemplateAction<{
+import { Config } from '@backstage/config';
+export declare const odoAction: (config: Config) => import("@backstage/plugin-scaffolder-node").TemplateAction<{
     workingDirectory: string;
     command: string;
     args: string[];
-    telemetry: boolean;
 }, import("@backstage/types").JsonObject>;

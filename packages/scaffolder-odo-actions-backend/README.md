@@ -22,6 +22,8 @@ yarn add --cwd packages/backend @rm3l/plugin-scaffolder-odo-actions
 
 ## Configuration
 
+### Code
+
 1. Import the actions into your `packages/backend/src/plugins/scaffolder.ts` on the Scaffolder Backend Plugin of your Backstage instance:
 
 ```js
@@ -46,7 +48,7 @@ const builtInActions = createBuiltinActions({
   reader: env.reader,
 });
 
-const actions = [...builtInActions, odoInitAction(), odoAction()];
+const actions = [...builtInActions, odoInitAction(env.config), odoAction(env.config)];
 
 return await createRouter({
   logger: env.logger,
@@ -57,6 +59,18 @@ return await createRouter({
   actions,
 });
 ```
+
+### app-config.yaml
+
+The behavior of these custom actions can be customized by adding the following section to your `app-config.yaml` file:
+
+```yaml
+odo:
+  telemetry:
+    # Disable the odo telemetry. False by default.
+    disabled: false
+```
+
 
 You should now see the custom `devfile:odo:*` actions if you navigate to the Actions page at http://localhost:3000/create/actions.
 
