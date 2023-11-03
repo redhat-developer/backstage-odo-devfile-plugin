@@ -5,7 +5,14 @@ export interface Config {
        * odo telemetry status
        * @visibility backend
        */
-      disabled: boolean;
+      disabled: boolean | undefined;
+    },
+    devfileRegistry: {
+      /**
+       * devfile registry URL
+       * @visibility backend
+       */
+      url: string | undefined;
     };
   };
 }
