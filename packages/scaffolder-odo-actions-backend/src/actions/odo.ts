@@ -5,7 +5,7 @@ import {
 import { Config } from "@backstage/config";
 import fs from "fs-extra";
 import { join } from "node:path";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 
 export const odoAction = (odoConfig: Config | undefined) => {
   return createTemplateAction<{
@@ -50,7 +50,7 @@ export const odoAction = (odoConfig: Config | undefined) => {
 
       // Create a temporary file to use as dedicated config for odo
       const tmpDir = await fs.mkdtemp(join(tmpdir(), "odo-"));
-      const odoConfigFilePath = `${tmpDir}/config`;
+      const odoConfigFilePath = join(tmpDir, 'config');
 
       const envVars = {
         // Due to a limitation in Node's child_process, the command lookup will be performed using options.env.PATH if options.env is defined.
@@ -61,9 +61,20 @@ export const odoAction = (odoConfig: Config | undefined) => {
         TELEMETRY_CALLER: "backstage",
       };
 
+      let odoBinaryPath = odoConfig?.getOptionalString("binaryPath");
+      if (!odoBinaryPath) {
+        // Resolve from the downloaded dir
+        odoBinaryPath = join(homedir(), ".cache", "odo-backstage-plugin", "bin", "odo");
+        if (!fs.existsSync(odoBinaryPath)) {
+          // Fallback to any odo command available in the PATH
+          ctx.logger.info(`odo binary path not set in app-config.yaml and not found in auto-download path (${odoBinaryPath}) => falling back to "odo" in the system PATH`);
+          odoBinaryPath = "odo";
+        }
+      }
+
       await fs.createFile(odoConfigFilePath);
       await executeShellCommand({
-        command: "odo",
+        command: odoBinaryPath,
         args: args,
         logStream: ctx.logStream,
         options: {

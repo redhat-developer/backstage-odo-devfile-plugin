@@ -5,7 +5,7 @@ import {
 import { Config } from "@backstage/config";
 import fs from "fs-extra";
 import { join } from "node:path";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 
 export const odoInitAction = (odoConfig: Config | undefined) => {
   return createTemplateAction<{
@@ -55,7 +55,7 @@ export const odoInitAction = (odoConfig: Config | undefined) => {
 
       // Create a temporary file to use as dedicated config for odo
       const tmpDir = await fs.mkdtemp(join(tmpdir(), "odo-init-"));
-      const odoConfigFilePath = `${tmpDir}/config`;
+      const odoConfigFilePath = join(tmpDir, 'config');
       ctx.logger.info(`...temp dir for odo config: ${tmpDir}`);
 
       const envVars = {
@@ -76,9 +76,20 @@ export const odoInitAction = (odoConfig: Config | undefined) => {
 
       await fs.createFile(odoConfigFilePath);
 
+      let odoBinaryPath = odoConfig?.getOptionalString("binaryPath");
+      if (!odoBinaryPath) {
+        // Resolve from the downloaded dir
+        odoBinaryPath = join(homedir(), ".cache", "odo-backstage-plugin", "bin", "odo");
+        if (!fs.existsSync(odoBinaryPath)) {
+          // Fallback to any odo command available in the PATH
+          ctx.logger.info(`odo binary path not set in app-config.yaml and not found in auto-download path (${odoBinaryPath}) => falling back to "odo" in the system PATH`);
+          odoBinaryPath = "odo";
+        }
+      }
+
       // Add registry
       await executeShellCommand({
-        command: "odo",
+        command: odoBinaryPath,
         args: [
           "preference",
           "add",
@@ -95,7 +106,7 @@ export const odoInitAction = (odoConfig: Config | undefined) => {
 
       // odo init
       await executeShellCommand({
-        command: "odo",
+        command: odoBinaryPath,
         args: [
           "init",
           "--name",

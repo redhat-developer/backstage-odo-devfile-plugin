@@ -70,6 +70,9 @@ Optionally, the behavior of these custom actions can be customized by adding the
 
 ```yaml
 odo:
+  # When adding this plugin to your Backstage instance, it will automatically try to download the right odo binary and use it.
+  # But if you already have odo installed, you can override the path below.
+  # binaryPath: '/path/to/odo'
   telemetry:
     # Disable the odo telemetry.
     # Default: false
