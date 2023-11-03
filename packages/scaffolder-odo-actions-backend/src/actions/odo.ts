@@ -7,7 +7,7 @@ import fs from "fs-extra";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
-export const odoAction = (config: Config) => {
+export const odoAction = (odoConfig: Config | undefined) => {
   return createTemplateAction<{
     workingDirectory: string;
     command: string;
@@ -45,7 +45,7 @@ export const odoAction = (config: Config) => {
       ctx.logger.info(`Running ${args}...`);
 
       const telemetryDisabled =
-        config.getOptionalBoolean("odo.telemetry.disabled") ?? false;
+        odoConfig?.getOptionalBoolean("telemetry.disabled") ?? false;
       ctx.logger.info(`...telemetry disabled: ${telemetryDisabled}`);
 
       // Create a temporary file to use as dedicated config for odo

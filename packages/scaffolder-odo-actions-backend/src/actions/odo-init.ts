@@ -7,7 +7,7 @@ import fs from "fs-extra";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
-export const odoInitAction = (config: Config) => {
+export const odoInitAction = (odoConfig: Config | undefined) => {
   return createTemplateAction<{
     devfile: string;
     version: string;
@@ -50,7 +50,7 @@ export const odoInitAction = (config: Config) => {
       );
 
       const telemetryDisabled =
-        config.getOptionalBoolean("odo.telemetry.disabled") ?? false;
+        odoConfig?.getOptionalBoolean("telemetry.disabled") ?? false;
       ctx.logger.info(`...telemetry disabled: ${telemetryDisabled}`);
 
       // Create a temporary file to use as dedicated config for odo
@@ -69,7 +69,7 @@ export const odoInitAction = (config: Config) => {
 
       const randomRegistryName = "GeneratedRegistryName";
       const devfileRegistryUrl =
-        config.getOptionalString("odo.devfileRegistry.url") ??
+        odoConfig?.getOptionalString("devfileRegistry.url") ??
         "https://registry.devfile.io";
 
       ctx.logger.info(`...devfile registry URL: ${devfileRegistryUrl}`);

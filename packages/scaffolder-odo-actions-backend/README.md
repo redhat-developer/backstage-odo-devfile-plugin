@@ -48,7 +48,11 @@ const builtInActions = createBuiltinActions({
   reader: env.reader,
 });
 
-const actions = [...builtInActions, odoInitAction(env.config), odoAction(env.config)];
+const actions = [
+  ...builtInActions,
+  odoInitAction(env.config.getOptionalConfig("odo")),
+  odoAction(env.config.getOptionalConfig("odo")),
+];
 
 return await createRouter({
   logger: env.logger,
@@ -62,13 +66,20 @@ return await createRouter({
 
 ### app-config.yaml
 
-The behavior of these custom actions can be customized by adding the following section to your `app-config.yaml` file:
+Optionally, the behavior of these custom actions can be customized by adding the following section to your `app-config.yaml` file:
 
 ```yaml
 odo:
   telemetry:
-    # Disable the odo telemetry. False by default.
+    # Disable the odo telemetry.
+    # Default: false
     disabled: false
+  devfileRegistry:
+    # Used for calling `odo init` and any other custom actions relying on a Devfile registry.
+    # If you are using the Devfile Selector Custom Field Extension in your template,
+    # you need to also add this URL to the 'proxy.endpoints' field under a '/devfile-registry' field.
+    # Default: 'https://registry.devfile.io'
+    url: 'https://registry.devfile.io'
 ```
 
 

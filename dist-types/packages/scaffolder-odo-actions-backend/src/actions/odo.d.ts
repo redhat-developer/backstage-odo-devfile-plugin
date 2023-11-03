@@ -1,5 +1,5 @@
 import { Config } from "@backstage/config";
-export declare const odoAction: (config: Config) => import("@backstage/plugin-scaffolder-node").TemplateAction<{
+export declare const odoAction: (odoConfig: Config | undefined) => import("@backstage/plugin-scaffolder-node").TemplateAction<{
     workingDirectory: string;
     command: string;
     args: string[];
