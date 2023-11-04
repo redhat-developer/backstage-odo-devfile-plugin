@@ -150,7 +150,6 @@ spec:
         devfile: ${{ parameters.devfile_data.devfile }}
         version: ${{ parameters.devfile_data.version }}
         starter_project: ${{ parameters.devfile_data.starter_project }}
-        telemetry: ${{ parameters.telemetry }}
 ```
 
 ### Example with the generic `odo` action
@@ -166,6 +165,5 @@ spec:
       input:
         command: ${{ parameters.command }} # e.g.: 'analyze'
         args: ${{ parameters.args }} # e.g.: ['-o', 'json']
-        telemetry: ${{ parameters.telemetry }}
 ```
 
