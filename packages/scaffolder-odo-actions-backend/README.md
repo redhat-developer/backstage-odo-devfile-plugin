@@ -25,14 +25,15 @@ This behavior can be customized by adding a new `"odo"` field in your `packages/
 
 {
   "odo": {
-    "version": "3.15.0", // specifying the version is optional. You can also specify "latest" to use the latest version of odo
+    // specifying the version is optional. You can also specify "latest" to use the latest version of odo
+    "version": "3.15.0",
     "skipDownload": false
   }
 }
 ```
 
 Note that the custom actions here do require an `odo` binary to work properly.
-So if you choose to skip the download (using the `odo.skipDownload`  properly in `packages/backend/package.json`), you need to make sure to meet either of the requirements below:
+So if you choose to skip the download (using the `odo.skipDownload`  property above), you need to make sure to meet either of the requirements below:
 - either `odo` is [installed](https://odo.dev/docs/overview/installation) and available in the system paths of the environment the Backstage instance is running in;
 - or you can explicitly set the path to the `odo` binary in your `app-config.yaml` (see [below](#app-configyaml)).
 
