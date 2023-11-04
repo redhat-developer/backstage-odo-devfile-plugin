@@ -16,7 +16,7 @@ From your Backstage instance root folder:
 yarn add --cwd packages/backend @rm3l/plugin-scaffolder-odo-actions
 ```
 
-This will download the right `odo` binary for the operating system and architecture from the Red Hat servers at https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/.
+This will download the right `odo` binary for the current operating system and architecture from the Red Hat servers at https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/.
 
 This behavior can be customized by adding a new `"odo"` field in your `packages/backend/package.json` file, like so:
 
@@ -33,9 +33,9 @@ This behavior can be customized by adding a new `"odo"` field in your `packages/
 ```
 
 Note that the custom actions here do require an `odo` binary to work properly.
-So if you choose to skip the download (using the `odo.skipDownload`  property above), you need to make sure to meet either of the requirements below:
-- either `odo` is [installed](https://odo.dev/docs/overview/installation) and available in the system paths of the environment the Backstage instance is running in;
-- or you can explicitly set the path to the `odo` binary in your `app-config.yaml` (see [below](#app-configyaml)).
+So if you choose to skip the download (using the `odo.skipDownload`  property above), you need to make sure to meet any of the requirements below:
+- either you can explicitly set the path to the `odo` binary in your `app-config.yaml` (see [below](#app-configyaml));
+- or `odo` is already [installed](https://odo.dev/docs/overview/installation) and available globally in the system paths of the environment the Backstage instance is running in.
 
 ## Configuration
 
