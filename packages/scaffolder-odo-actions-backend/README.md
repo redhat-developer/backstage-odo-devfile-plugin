@@ -5,10 +5,6 @@ It contains the following actions:
 - `devfile:odo:command`: a generic action that can execute any `odo` command from the scaffolder workspace.
 - `devfile:odo:component:init`: allows to execute the [`odo init`](https://odo.dev/docs/command-reference/init) command from the scaffolder workspace. The goal of this action is to generate a starter project for a given Devfile that can be customized later on.
 
-## Prerequisites
-
-- `odo` must be installed in the environment your Backstage instance is running in. See https://odo.dev/docs/overview/installation for more details.
-
 ## Preview
 
 ![Screenshot from 2023-10-13 14-44-52](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/713abb47-5875-45ce-a591-1f0d0b30859e)
@@ -19,6 +15,26 @@ From your Backstage instance root folder:
 ```shell
 yarn add --cwd packages/backend @rm3l/plugin-scaffolder-odo-actions
 ```
+
+This will download the right `odo` binary for the operating system and architecture from the Red Hat servers at https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/.
+
+This behavior can be customized by adding a new `"odo"` field in your `packages/backend/package.json` file, like so:
+
+```json
+// packages/backend/package.json
+
+{
+  "odo": {
+    "version": "3.15.0", // specifying the version is optional. You can also specify "latest" to use the latest version of odo
+    "skipDownload": false
+  }
+}
+```
+
+Note that the custom actions here do require an `odo` binary to work properly.
+So if you choose to skip the download (using the `odo.skipDownload`  properly in `packages/backend/package.json`), you need to make sure to meet either of the requirements below:
+- either `odo` is [installed](https://odo.dev/docs/overview/installation) and available in the system paths of the environment the Backstage instance is running in;
+- or you can explicitly set the path to the `odo` binary in your `app-config.yaml` (see [below](#app-configyaml)).
 
 ## Configuration
 
@@ -69,6 +85,8 @@ return await createRouter({
 Optionally, the behavior of these custom actions can be customized by adding the following section to your `app-config.yaml` file:
 
 ```yaml
+# app-config.yaml
+
 odo:
   # When adding this plugin to your Backstage instance, it will automatically try to download the right odo binary and use it.
   # But if you already have odo installed, you can override the path below.
