@@ -130,7 +130,6 @@ spec:
           required:
             - devfile
             - version
-            - starter_project
           properties:
             devfile:
               type: string
