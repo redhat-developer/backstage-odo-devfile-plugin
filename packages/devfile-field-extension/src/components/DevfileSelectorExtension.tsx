@@ -4,13 +4,17 @@ import { z } from "zod";
 import { makeFieldSchemaFromZod } from "@backstage/plugin-scaffolder";
 import { useAsync } from "react-use";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { makeStyles } from "@material-ui/core/styles";
 import { useApi, configApiRef } from "@backstage/core-plugin-api";
 
 const DevfileSelectorExtensionWithOptionsFieldSchema = makeFieldSchemaFromZod(
   z.object({
     devfile: z.string().describe("Devfile name"),
     version: z.string().describe("Devfile Stack version"),
-    starter_project: z.string().optional().describe("Devfile Stack starter project"),
+    starter_project: z
+      .string()
+      .optional()
+      .describe("Devfile Stack starter project"),
   })
 );
 
@@ -22,6 +26,7 @@ type DevfileSelectorExtensionWithOptionsProps =
 
 export interface DevfileStack {
   name: string;
+  displayName: string | undefined;
   icon: string;
   versions: DevfileStackVersion[];
 }
@@ -30,6 +35,16 @@ export interface DevfileStackVersion {
   version: string;
   starterProjects: string[];
 }
+
+const useStyles = makeStyles({
+  option: {
+    fontSize: 15,
+    "& > span": {
+      marginRight: 10,
+      fontSize: 18,
+    },
+  },
+});
 
 export const DevfileSelectorExtension = ({
   onChange,
@@ -42,7 +57,6 @@ export const DevfileSelectorExtension = ({
   const config = useApi(configApiRef);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<DevfileStack[]>([]);
-  const [stacks, setStacks] = useState<string[]>([]);
   const [selectedStack, setSelectedStack] = useState("");
   const [versions, setVersions] = useState<string[]>([]);
   const [selectedVersion, setSelectedVersion] = useState("");
@@ -59,11 +73,10 @@ export const DevfileSelectorExtension = ({
       },
     });
     const resp = (await req.json()) as DevfileStack[];
+    resp.sort((a, b) =>
+      (a.displayName ?? "").localeCompare(b.displayName ?? "")
+    );
     setData(resp);
-
-    const stackNames = resp.map((stack: DevfileStack) => stack.name);
-    stackNames.sort();
-    setStacks(stackNames);
 
     setVersions([]);
     setStarterprojects([]);
@@ -71,25 +84,26 @@ export const DevfileSelectorExtension = ({
     setLoading(false);
   });
 
-  const handleDevfileStack = (value: any) => {
-    const filteredStacks = data.filter((stack) => stack.name === value);
+  const handleDevfileStack = (value: DevfileStack) => {
+    const filteredStacks = data.filter((stack) => stack.name === value?.name);
     const versionList = filteredStacks.flatMap((stack) => stack.versions);
     const filteredVersions = versionList.map((v) => v.version);
-    filteredVersions.sort();
+    filteredVersions.sort((a, b) => a.localeCompare(b));
 
     let filteredStarterProjects: string[] = [];
     if (versionList.length > 0) {
       filteredStarterProjects = versionList[0].starterProjects ?? [];
     }
 
-    setSelectedStack(value as string);
+    setSelectedStack(value.name);
     setVersions(filteredVersions);
     setStarterprojects(filteredStarterProjects);
 
     onChange({
-      devfile: value as string,
-      version: (versionList.length > 0) ? versionList[0].version : '',
-      starter_project: (filteredStarterProjects.length > 0) ? filteredStarterProjects[0] : '',
+      devfile: value.name,
+      version: versionList.length > 0 ? versionList[0].version : "",
+      starter_project:
+        filteredStarterProjects.length > 0 ? filteredStarterProjects[0] : "",
     });
   };
 
@@ -99,7 +113,7 @@ export const DevfileSelectorExtension = ({
       .flatMap((stack) => stack.versions)
       .filter((v) => v.version === value)
       .flatMap((v) => v.starterProjects ?? []);
-    filteredResult.sort();
+    filteredResult.sort((a, b) => a.localeCompare(b));
 
     setSelectedVersion(value as string);
     setStarterprojects(filteredResult);
@@ -107,7 +121,7 @@ export const DevfileSelectorExtension = ({
     onChange({
       devfile: selectedStack,
       version: value as string,
-      starter_project: (filteredResult.length > 0) ? filteredResult[0] : '',
+      starter_project: filteredResult.length > 0 ? filteredResult[0] : "",
     });
   };
 
@@ -119,6 +133,8 @@ export const DevfileSelectorExtension = ({
     });
   };
 
+  const classes = useStyles();
+
   return (
     <FormControl
       margin="normal"
@@ -129,20 +145,47 @@ export const DevfileSelectorExtension = ({
         id={`devfile-selector-${idSchema?.$id}`}
         loading={loading}
         noOptionsText="No Devfile Stacks available from registry"
-        value={formData?.devfile ?? null}
+        value={
+          // dummy DevfileStack object with the name set, so that getOptionSelected can resolve the right item from data
+          { name: formData?.devfile, icon: "", displayName: "", versions: [] }
+        }
+        classes={{
+          option: classes.option,
+        }}
+        options={data}
+        renderOption={(option) =>
+          option.icon ? (
+            <React.Fragment>
+              <span>
+                <img
+                  style={{ width: 50, height: 50 }}
+                  src={option.icon}
+                  alt={`icon for ${option.name}`}
+                />
+              </span>
+              {option.displayName}
+            </React.Fragment>
+          ) : (
+            <React.Fragment>{option.displayName}</React.Fragment>
+          )
+        }
+        getOptionLabel={(option) => option.name}
         renderInput={(params) => (
           <TextField
             {...params}
             label="Devfile Stack"
-            variant="standard"
+            variant="outlined"
             required={required}
             error={rawErrors?.length > 0 && !formData}
+            inputProps={{
+              ...params.inputProps,
+              autoComplete: "new-password", // disable autocomplete and autofill
+            }}
             helperText={description}
           />
         )}
-        options={stacks}
         onChange={(_, value) => handleDevfileStack(value)}
-        getOptionSelected={(option, value) => option === value}
+        getOptionSelected={(option, value) => option.name === value.name}
         disableClearable
       />
       <Autocomplete
@@ -154,10 +197,14 @@ export const DevfileSelectorExtension = ({
           <TextField
             {...params}
             label="Version"
-            variant="standard"
+            variant="outlined"
             required={required}
             error={rawErrors?.length > 0 && !formData}
             helperText={description}
+            inputProps={{
+              ...params.inputProps,
+              autoComplete: "new-password", // disable autocomplete and autofill
+            }}
           />
         )}
         options={versions}
@@ -170,16 +217,20 @@ export const DevfileSelectorExtension = ({
         loading={loading}
         value={
           formData?.starter_project ??
-          (starterprojects.length > 0 ? starterprojects[0] : '')
+          (starterprojects.length > 0 ? starterprojects[0] : "")
         }
         noOptionsText="No starter project available in Devfile Stack"
         renderInput={(params) => (
           <TextField
             {...params}
             label="Starter Project"
-            variant="standard"
-            required={required}
+            variant="outlined"
+            required={false}
             error={rawErrors?.length > 0 && !formData}
+            inputProps={{
+              ...params.inputProps,
+              autoComplete: "new-password", // disable autocomplete and autofill
+            }}
             helperText={description}
           />
         )}
