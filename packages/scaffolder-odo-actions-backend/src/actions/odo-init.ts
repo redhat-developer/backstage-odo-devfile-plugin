@@ -12,13 +12,13 @@ export const odoInitAction = (odoConfig: Config | undefined) => {
   return createTemplateAction<{
     devfile: string;
     version: string;
-    starter_project: string;
+    starter_project: string | undefined;
     name: string;
   }>({
     id: "devfile:odo:component:init",
     schema: {
       input: {
-        required: ["devfile", "version", "starter_project", "name"],
+        required: ["devfile", "version", "name"],
         type: "object",
         properties: {
           devfile: {
@@ -109,21 +109,23 @@ export const odoInitAction = (odoConfig: Config | undefined) => {
       });
 
       // odo init
+      const initArgs = [
+        "init",
+        "--name",
+        ctx.input.name,
+        "--devfile-registry",
+        randomRegistryName,
+        "--devfile",
+        ctx.input.devfile,
+        "--devfile-version",
+        ctx.input.version,
+      ];
+      if (ctx.input.starter_project) {
+        initArgs.push("--starter", ctx.input.starter_project);
+      }
       await executeShellCommand({
         command: odoBinaryPath,
-        args: [
-          "init",
-          "--name",
-          ctx.input.name,
-          "--devfile-registry",
-          randomRegistryName,
-          "--devfile",
-          ctx.input.devfile,
-          "--devfile-version",
-          ctx.input.version,
-          "--starter",
-          ctx.input.starter_project,
-        ],
+        args: initArgs,
         logStream: ctx.logStream,
         options: {
           cwd: ctx.workspacePath,

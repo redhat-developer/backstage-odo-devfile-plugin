@@ -12,5 +12,5 @@ export interface DevfileStackVersion {
 export declare const DevfileSelectorExtension: ({ onChange, rawErrors, required, formData, idSchema, schema: { description }, }: import("@backstage/plugin-scaffolder-react").FieldExtensionComponentProps<{
     devfile: string;
     version: string;
-    starter_project: string;
+    starter_project?: string | undefined;
 }, {}>) => React.JSX.Element;

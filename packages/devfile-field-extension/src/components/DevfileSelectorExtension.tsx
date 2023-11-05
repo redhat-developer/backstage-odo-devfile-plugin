@@ -10,7 +10,7 @@ const DevfileSelectorExtensionWithOptionsFieldSchema = makeFieldSchemaFromZod(
   z.object({
     devfile: z.string().describe("Devfile name"),
     version: z.string().describe("Devfile Stack version"),
-    starter_project: z.string().describe("Devfile Stack starter project"),
+    starter_project: z.string().optional().describe("Devfile Stack starter project"),
   })
 );
 
@@ -88,8 +88,8 @@ export const DevfileSelectorExtension = ({
 
     onChange({
       devfile: value as string,
-      version: (versionList?.length > 0) ? versionList[0].version : '',
-      starter_project: (filteredStarterProjects?.length > 0) ? filteredStarterProjects[0] : '',
+      version: (versionList.length > 0) ? versionList[0].version : '',
+      starter_project: (filteredStarterProjects.length > 0) ? filteredStarterProjects[0] : '',
     });
   };
 
@@ -107,7 +107,7 @@ export const DevfileSelectorExtension = ({
     onChange({
       devfile: selectedStack,
       version: value as string,
-      starter_project: (filteredResult?.length > 0) ? filteredResult[0] : '',
+      starter_project: (filteredResult.length > 0) ? filteredResult[0] : '',
     });
   };
 
@@ -115,7 +115,7 @@ export const DevfileSelectorExtension = ({
     onChange({
       devfile: selectedStack,
       version: selectedVersion,
-      starter_project: (value ?? '') as string,
+      starter_project: value as string,
     });
   };
 
@@ -170,7 +170,7 @@ export const DevfileSelectorExtension = ({
         loading={loading}
         value={
           formData?.starter_project ??
-          (starterprojects?.length > 0 ? starterprojects[0] : null)
+          (starterprojects.length > 0 ? starterprojects[0] : '')
         }
         noOptionsText="No starter project available in Devfile Stack"
         renderInput={(params) => (
