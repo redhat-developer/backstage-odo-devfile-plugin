@@ -141,104 +141,114 @@ export const DevfileSelectorExtension = ({
       required={required}
       error={rawErrors?.length > 0}
     >
-      <Autocomplete
-        id={`devfile-selector-${idSchema?.$id}`}
-        loading={loading}
-        noOptionsText="No Devfile Stacks available from registry"
-        value={
-          // dummy DevfileStack object with the name set, so that getOptionSelected can resolve the right item from data
-          { name: formData?.devfile, icon: "", displayName: "", versions: [] }
-        }
-        classes={{
-          option: classes.option,
-        }}
-        options={data}
-        renderOption={(option) =>
-          option.icon ? (
-            <React.Fragment>
-              <span>
-                <img
-                  style={{ width: 50, height: 50 }}
-                  src={option.icon}
-                  alt={`icon for ${option.name}`}
-                />
-              </span>
-              {option.displayName}
-            </React.Fragment>
-          ) : (
-            <React.Fragment>{option.displayName}</React.Fragment>
-          )
-        }
-        getOptionLabel={(option) => option.name}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Devfile Stack"
-            variant="outlined"
-            required={required}
-            error={rawErrors?.length > 0 && !formData}
-            inputProps={{
-              ...params.inputProps,
-              autoComplete: "new-password", // disable autocomplete and autofill
-            }}
-            helperText={description}
-          />
-        )}
-        onChange={(_, value) => handleDevfileStack(value)}
-        getOptionSelected={(option, value) => option.name === value.name}
-        disableClearable
-      />
-      <Autocomplete
-        id={`devfile-version-selector-${idSchema?.$id}`}
-        loading={loading}
-        value={formData?.version ?? (versions.length > 0 ? versions[0] : null)}
-        noOptionsText="No version available in Devfile Stack"
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Version"
-            variant="outlined"
-            required={required}
-            error={rawErrors?.length > 0 && !formData}
-            helperText={description}
-            inputProps={{
-              ...params.inputProps,
-              autoComplete: "new-password", // disable autocomplete and autofill
-            }}
-          />
-        )}
-        options={versions}
-        onChange={(_, value) => handleDevfileStackVersion(value)}
-        getOptionSelected={(option, value) => option === value}
-        disableClearable
-      />
-      <Autocomplete
-        id={`devfile-starter-project-selector-${idSchema?.$id}`}
-        loading={loading}
-        value={
-          formData?.starter_project ??
-          (starterprojects.length > 0 ? starterprojects[0] : "")
-        }
-        noOptionsText="No starter project available in Devfile Stack"
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Starter Project"
-            variant="outlined"
-            required={false}
-            error={rawErrors?.length > 0 && !formData}
-            inputProps={{
-              ...params.inputProps,
-              autoComplete: "new-password", // disable autocomplete and autofill
-            }}
-            helperText={description}
-          />
-        )}
-        options={starterprojects}
-        onChange={(_, value) => handleDevfileStarterProject(value)}
-        getOptionSelected={(option, value) => option === value}
-        disableClearable
-      />
+      <div>
+        <Autocomplete
+          id={`devfile-selector-${idSchema?.$id}`}
+          loading={loading}
+          noOptionsText="No Devfile Stacks available from registry"
+          value={
+            // dummy DevfileStack object with the name set, so that getOptionSelected can resolve the right item from data
+            { name: formData?.devfile, icon: "", displayName: "", versions: [] }
+          }
+          classes={{
+            option: classes.option,
+          }}
+          options={data}
+          renderOption={(option) =>
+            option.icon ? (
+              <React.Fragment>
+                <span>
+                  <img
+                    style={{ width: 50, height: 50 }}
+                    src={option.icon}
+                    alt={`icon for ${option.name}`}
+                  />
+                </span>
+                {option.displayName}
+              </React.Fragment>
+            ) : (
+              <React.Fragment>{option.displayName}</React.Fragment>
+            )
+          }
+          getOptionLabel={(option) => option.name}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Devfile Stack"
+              variant="outlined"
+              required={required}
+              error={rawErrors?.length > 0 && !formData}
+              inputProps={{
+                ...params.inputProps,
+                autoComplete: "new-password", // disable autocomplete and autofill
+              }}
+              helperText={description}
+            />
+          )}
+          onChange={(_, value) => handleDevfileStack(value)}
+          getOptionSelected={(option, value) => option.name === value.name}
+          disableClearable
+        />
+      </div>
+      <br/>
+      <div>
+        <Autocomplete
+          id={`devfile-version-selector-${idSchema?.$id}`}
+          loading={loading}
+          value={
+            formData?.version ?? (versions.length > 0 ? versions[0] : null)
+          }
+          noOptionsText="No version available in Devfile Stack"
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Version"
+              variant="outlined"
+              required={required}
+              error={rawErrors?.length > 0 && !formData}
+              helperText={description}
+              inputProps={{
+                ...params.inputProps,
+                autoComplete: "new-password", // disable autocomplete and autofill
+              }}
+            />
+          )}
+          options={versions}
+          onChange={(_, value) => handleDevfileStackVersion(value)}
+          getOptionSelected={(option, value) => option === value}
+          disableClearable
+        />
+      </div>
+      <br/>
+      <div>
+        <Autocomplete
+          id={`devfile-starter-project-selector-${idSchema?.$id}`}
+          loading={loading}
+          value={
+            formData?.starter_project ??
+            (starterprojects.length > 0 ? starterprojects[0] : "")
+          }
+          noOptionsText="No starter project available in Devfile Stack"
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Starter Project"
+              variant="outlined"
+              required={false}
+              error={rawErrors?.length > 0 && !formData}
+              inputProps={{
+                ...params.inputProps,
+                autoComplete: "new-password", // disable autocomplete and autofill
+              }}
+              helperText={description}
+            />
+          )}
+          options={starterprojects}
+          onChange={(_, value) => handleDevfileStarterProject(value)}
+          getOptionSelected={(option, value) => option === value}
+          disableClearable
+        />
+      </div>
     </FormControl>
   );
 };
