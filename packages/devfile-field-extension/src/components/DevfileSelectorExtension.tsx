@@ -133,7 +133,7 @@ export const DevfileSelectorExtension = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Stack"
+            label="Devfile Stack"
             variant="standard"
             required={required}
             error={rawErrors?.length > 0 && !formData}
