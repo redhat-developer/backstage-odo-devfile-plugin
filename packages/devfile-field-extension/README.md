@@ -5,7 +5,7 @@ It interacts with the configured [Devfile registry](https://registry.devfile.io/
 
 ## Preview
 
-![Screenshot from 2023-10-13 14-13-10](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/3a107db0-4aef-42f7-bfb2-6e463373b906)
+![Devfile Selector Custom Field Extension Preview](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/e7fcc998-dc87-4603-977b-76f510fed3aa)
 
 ## Installation
 
@@ -68,7 +68,6 @@ parameters:
           required:
             - devfile
             - version
-            - starter_project
           properties:
             devfile:
               type: string
