@@ -53,9 +53,9 @@ You should now see the custom field `DevfileSelectorExtension` and its dropdown 
 ## Usage
 
 To use the extension in a Backstage Software Template, you can add the `ui:field` field to the parameter. The output of the extension is an object made up of the following fields:
-- `devfile`: the Devfile Stack selected by the user
+- `devfile`: the Devfile Stack selected by the user.
 - `version`: the Devfile Stack version selected by the user
-- `starter_project`: the Devfile Starter Project selected by the user.
+- `starter_project`: the Devfile Starter Project selected by the user. Optional.
 
 ```yaml
 parameters:
