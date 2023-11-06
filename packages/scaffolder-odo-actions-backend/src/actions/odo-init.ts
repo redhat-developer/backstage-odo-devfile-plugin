@@ -80,7 +80,7 @@ export const odoInitAction = (odoConfig: Config | undefined) => {
       let odoBinaryPath = odoConfig?.getOptionalString("binaryPath");
       if (!odoBinaryPath) {
         // Resolve from the downloaded dir
-        odoBinaryPath = join(cachedir("odo"), "odo");
+        odoBinaryPath = join(cachedir("odo"), `odo${process.platform === "win32" ? ".exe" : ""}`);
         if (!fs.existsSync(odoBinaryPath)) {
           // Fallback to any odo command available in the PATH
           ctx.logger.info(

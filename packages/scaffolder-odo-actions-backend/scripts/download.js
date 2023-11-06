@@ -31,12 +31,13 @@ const SUPPORTED_ARCHITECTURES_BY_PLATFORM = new Map(
 
 /**
  * This avoids an expensive donwload if file is already in cache.
- * 
+ *
  * @param {string} url
  * @param {string} platform
+ * @param {string} arch
  * @param {string} version
  */
-async function cachingFetchAndVerify(url, platform, version) {
+async function cachingFetchAndVerify(url, platform, arch, version) {
   const parentCacheDir = cachedir("odo");
   const cacheDir = path.join(parentCacheDir, version);
   const filename = url.split("/").pop();
@@ -94,13 +95,25 @@ async function cachingFetchAndVerify(url, platform, version) {
   const data = fs.createReadStream(cachedFilePath);
 
   await unpack(url, parentCacheDir, data);
-  console.info(`Unpacked ${parentCacheDir}`);
+  console.info(`Unpacked into ${parentCacheDir}`);
 
-  return path.join(
-    parentCacheDir,
-    "odo",
-    `odo${platform === "windows" ? ".exe" : ""}`
-  );
+  // Rename file if needed
+  let resultingFileName = "odo";
+  switch (platform) {
+    case "windows":
+      resultingFileName = "odo.exe";
+      fs.renameSync(path.join(parentCacheDir, `odo-${platform}-${arch}.exe`), path.join(parentCacheDir, resultingFileName));
+      break;
+    case "darwin":
+      fs.renameSync(path.join(parentCacheDir, `odo-${platform}-${arch}`), path.join(parentCacheDir, resultingFileName));
+      break;
+    default:
+      break;
+  }
+
+  const  p = path.join(parentCacheDir, resultingFileName);
+  console.log(`odo binary (${version}) available at '${p}'`);
+  return p;
 }
 
 /**
@@ -141,7 +154,7 @@ async function download({ version, platform, arch }) {
   const url = `${ODO_DIST_URL}/${versionToDl}/odo-${platform}-${arch}.${
     platform === "windows" ? "exe.zip" : "tar.gz"
   }`;
-  return await cachingFetchAndVerify(url, platform, version);
+  return await cachingFetchAndVerify(url, platform, arch, version);
 }
 
 /**
@@ -186,7 +199,7 @@ function buildArguments(version, platform, arch) {
       process.env.BACKSTAGE_ODO_PLUGIN__ODO_VERSION || version || conf.version,
     platform:
       process.env.BACKSTAGE_ODO_PLUGIN__TARGET_OS || platform || goenv.GOOS,
-    arch: process.env.BACKSTAGE_ODO_PLUGIN__TARGET_ARCH || arch || goenv.GOARCH
+    arch: process.env.BACKSTAGE_ODO_PLUGIN__TARGET_ARCH || arch || goenv.GOARCH,
   };
 }
 

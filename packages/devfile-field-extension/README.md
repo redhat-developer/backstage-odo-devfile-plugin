@@ -48,7 +48,7 @@ proxy:
       target: 'https://registry.devfile.io'
 ```
 
-You should now see the custom field `DevfileSelectorExtension` and its dropdown lists populated if you navigate to the Template Editor page at `http://localhost:3000/create/edit`.
+You should now see the custom field `DevfileSelectorExtension` and its dropdown lists populated if you navigate to the Template Editor page at http://localhost:3000/create/edit.
 
 ## Usage
 
