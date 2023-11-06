@@ -96,6 +96,7 @@ export const DevfileSelectorExtension = ({
     }
 
     setSelectedStack(value.name);
+    setSelectedVersion(filteredVersions?.length > 0 ? filteredVersions[0] : "");
     setVersions(filteredVersions);
     setStarterprojects(filteredStarterProjects);
 
@@ -148,7 +149,7 @@ export const DevfileSelectorExtension = ({
           noOptionsText="No Devfile Stacks available from registry"
           value={
             // dummy DevfileStack object with the name set, so that getOptionSelected can resolve the right item from data
-            { name: formData?.devfile, icon: "", displayName: "", versions: [] }
+            { name: formData?.devfile ?? selectedStack, icon: "", displayName: "", versions: [] }
           }
           classes={{
             option: classes.option,
@@ -196,7 +197,7 @@ export const DevfileSelectorExtension = ({
           id={`devfile-version-selector-${idSchema?.$id}`}
           loading={loading}
           value={
-            formData?.version ?? (versions.length > 0 ? versions[0] : null)
+            formData?.version ?? selectedVersion ?? (versions.length > 0 ? versions[0] : null)
           }
           noOptionsText="No version available in Devfile Stack"
           renderInput={(params) => (
