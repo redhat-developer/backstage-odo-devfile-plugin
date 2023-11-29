@@ -8,4 +8,4 @@ This repository contains a set of extensions for Backstage that can be used to w
 
 ## Example
 
-See https://github.com/rm3l/odo-backstage-golden-path-template for an end-to-end example of a Software Template (a.k.a Golden Path Template) relying on the extensions above.
+See https://github.com/ododev/odo-backstage-golden-path-template for an end-to-end example of a Software Template (a.k.a Golden Path Template) relying on the extensions above.
