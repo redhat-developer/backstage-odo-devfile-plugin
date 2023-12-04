@@ -5,13 +5,13 @@ It interacts with the configured [Devfile registry](https://registry.devfile.io/
 
 ## Preview
 
-![Devfile Selector Custom Field Extension Preview](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/e7fcc998-dc87-4603-977b-76f510fed3aa)
+![Devfile Custom Field Extension Preview](https://github.com/rm3l/backstage-odo-devfile-plugin/assets/593208/e7fcc998-dc87-4603-977b-76f510fed3aa)
 
 ## Installation
 
 From your Backstage instance root folder:
 ```shell
-yarn add --cwd packages/app @rm3l/plugin-scaffolder-frontend-module-devfile-field
+yarn add --cwd packages/app @redhat-developer/plugin-scaffolder-frontend-module-devfile-field
 ```
 
 ## Configuration
@@ -21,7 +21,7 @@ yarn add --cwd packages/app @rm3l/plugin-scaffolder-frontend-module-devfile-fiel
 ```js
 // packages/app/src/App.tsx
 
-import { DevfileSelectorFieldExtension } from '@rm3l/plugin-scaffolder-frontend-module-devfile-field';
+import { DevfileSelectorFieldExtension } from '@redhat-developer/plugin-scaffolder-frontend-module-devfile-field';
 import { ScaffolderFieldExtensions } from '@backstage/plugin-scaffolder-react';
 ```
 

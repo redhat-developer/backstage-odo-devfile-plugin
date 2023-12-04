@@ -1,5 +1,5 @@
 {
-  "name": "@rm3l/plugin-scaffolder-frontend-module-devfile-field",
+  "name": "@redhat-developer/plugin-scaffolder-frontend-module-devfile-field",
   "version": "0.16.7",
   "main": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -51,19 +51,20 @@
     "package.json",
     "README.md"
   ],
-  "description": "Devfile Field Extensions (Frontend Plugin)",
+  "description": "Devfile Custom Field Extensions (Frontend Plugin)",
   "keywords": [
     "backstage",
-    "plugin",
+    "custom-field-extension",
+    "frontend-plugin",
     "devfile"
   ],
-  "author": "rm3l",
-  "homepage": "https://devfile.io",
+  "author": "Red Hat",
+  "homepage": "https://odo.dev",
   "bugs": {
-    "url": "https://github.com/rm3l/backstage-odo-devfile-plugin/issues"
+    "url": "https://github.com/redhat-developer/backstage-odo-devfile-plugin/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rm3l/backstage-odo-devfile-plugin.git"
+    "url": "git+https://github.com/redhat-developer/backstage-odo-devfile-plugin.git"
   }
 }

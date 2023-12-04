@@ -1,5 +1,5 @@
 {
-  "name": "backstage-odo-devfile",
+  "name": "@redhat-developer/backstage-odo-devfile-plugin",
   "version": "0.6.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -29,5 +29,21 @@
   "devDependencies": {
     "@backstage/cli": "^0.22.13",
     "@testing-library/jest-dom": "^5.10.1"
+  },
+  "description": "odo extensions for Backstage",
+  "keywords": [
+    "backstage",
+    "plugin",
+    "devfile",
+    "odo"
+  ],
+  "author": "Red Hat",
+  "homepage": "https://odo.dev",
+  "bugs": {
+    "url": "https://github.com/redhat-developer/backstage-odo-devfile-plugin/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redhat-developer/backstage-odo-devfile-plugin.git"
   }
 }

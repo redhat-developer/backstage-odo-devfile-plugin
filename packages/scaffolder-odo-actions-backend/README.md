@@ -2,8 +2,10 @@
 
 This is a [Backend Plugin](https://backstage.io/docs/plugins/backend-plugin/) containing a set of [Custom Actions](https://backstage.io/docs/features/software-templates/writing-custom-actions) using the [`odo`](https://odo.dev/) CLI.
 It contains the following actions:
+
 - `devfile:odo:command`: a generic action that can execute any `odo` command from the scaffolder workspace.
-- `devfile:odo:component:init`: allows to execute the [`odo init`](https://odo.dev/docs/command-reference/init) command from the scaffolder workspace. The goal of this action is to generate a starter project for a given Devfile that can be customized later on.
+
+- `devfile:odo:component:init`: allows to execute the [`odo init`](https://odo.dev/docs/command-reference/init) command from the Scaffolder workspace. The goal of this action is to generate a starter project for a given Devfile that can be customized later on.
 
 ## Preview
 
@@ -13,7 +15,7 @@ It contains the following actions:
 
 From your Backstage instance root folder:
 ```shell
-yarn add --cwd packages/backend @rm3l/plugin-scaffolder-odo-actions
+yarn add --cwd packages/backend @redhat-developer/plugin-scaffolder-odo-actions
 ```
 
 This will download the right `odo` binary for the current operating system and architecture from the Red Hat servers at https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/.
@@ -48,7 +50,7 @@ So if you choose to skip the download (using the `odo.skipDownload`  property ab
 
 import { createBuiltinActions } from '@backstage/plugin-scaffolder-backend';
 import { ScmIntegrations } from '@backstage/integration';
-import { odoInitAction, odoAction } from '@rm3l/plugin-scaffolder-odo-actions';
+import { odoInitAction, odoAction } from '@redhat-developer/plugin-scaffolder-odo-actions';
 ```
 
 2. Then pass the imported actions along with the built-in ones to the `createRouter` function. You should end up with something like this in the end:
