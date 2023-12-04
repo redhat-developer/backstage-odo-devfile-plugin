@@ -33,6 +33,7 @@
     "cachedir": "^2.4.0",
     "express": "^4.17.1",
     "express-promise-router": "^4.1.0",
+    "fs-extra": "^11.2.0",
     "got": "^11.7.0",
     "gunzip-maybe": "^1.4.2",
     "hasha": "^5.2.2",
