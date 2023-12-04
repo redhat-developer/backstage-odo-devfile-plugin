@@ -6,12 +6,12 @@ on:
       - '*'
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         pkg: [scaffolder-odo-actions-backend, devfile-field-extension]
-
+    name: Release ${{ matrix.pkg }}
     steps:
     - uses: actions/checkout@v4
 
