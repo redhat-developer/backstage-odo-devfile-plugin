@@ -1,0 +1,35 @@
+name: CI Build
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'yarn'
+    - run: yarn --version
+
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+
+    - name: Lint
+      run: yarn workspaces run lint
+
+    - name: Run TypeScript Compiler
+      run: yarn workspaces run tsc
+
+    - name: Build
+      run: yarn workspaces run build
+
+    - name: Test
+      run: yarn workspaces run test --ci
