@@ -35,4 +35,4 @@ jobs:
     - name: Publish to npmjs
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      run: npm --prefix packages/${{ matrix.pkg }} publish --provenance --access public
+      run: cd packages/${{ matrix.pkg }} && npm publish --provenance --access public
