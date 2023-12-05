@@ -31,10 +31,5 @@ jobs:
     - name: Build
       run: yarn workspaces run build
 
-    - name: Test scaffolder-odo-actions-backend
-      run: |
-        cd packages/scaffolder-odo-actions-backend && yarn test --ci
-
-    - name: Test devfile-field-extension
-      run: |
-        cd packages/devfile-field-extension && yarn test --ci
+    - name: Test
+      run: yarn workspaces run test --ci
