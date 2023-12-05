@@ -1,5 +1,8 @@
 # backstage-odo-devfile-plugin
 
+[![CI Build](https://github.com/redhat-developer/backstage-odo-devfile-plugin/actions/workflows/ci.yaml/badge.svg)](https://github.com/redhat-developer/backstage-odo-devfile-plugin/actions/workflows/ci.yaml)
+[![Release to NPM registry](https://github.com/redhat-developer/backstage-odo-devfile-plugin/actions/workflows/release.yaml/badge.svg)](https://github.com/redhat-developer/backstage-odo-devfile-plugin/actions/workflows/release.yaml)
+
 [odo](https://odo.dev/) and [Devfile](https://devfile.io/) integration within Backstage.
 
 This repository contains a set of extensions for Backstage that can be used to write your own [Software Templates](https://backstage.io/docs/features/software-templates/):
