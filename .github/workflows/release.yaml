@@ -1,13 +1,15 @@
 name: Release to NPM registry
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [created]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     strategy:
       matrix:
         pkg: [scaffolder-odo-actions-backend, devfile-field-extension]
@@ -17,7 +19,7 @@ jobs:
 
     - uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: '18.x'
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
 
@@ -30,7 +32,7 @@ jobs:
     - name: Build
       run: yarn --cwd packages/${{ matrix.pkg }} build
 
-    - name: Publish to NPM
+    - name: Publish to npmjs
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      run: npm --prefix packages/${{ matrix.pkg }} publish --access public
+      run: npm --prefix packages/${{ matrix.pkg }} publish --provenance --access public
