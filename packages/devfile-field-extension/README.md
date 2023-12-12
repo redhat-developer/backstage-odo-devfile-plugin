@@ -81,4 +81,4 @@ parameters:
             rows: 5
 ```
 
-See https://github.com/ododev/odo-backstage-software-template for an example of a [Software Template](https://backstage.io/docs/features/software-templates/)https://backstage.io/docs/features/software-templates/ making use of the Devfile Selector Field Extension.
+See https://github.com/ododev/odo-backstage-software-template for an example of a [Software Template](https://backstage.io/docs/features/software-templates/) making use of the Devfile Selector Field Extension.
