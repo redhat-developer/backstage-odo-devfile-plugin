@@ -113,7 +113,8 @@ You should now see the custom `devfile:odo:*` actions if you navigate to the Act
 
 ## Usage
 
-You can use the action in any of the steps of your Software Template.
+You can use the action in any of the steps of your [Software Template](https://backstage.io/docs/features/software-templates/). 
+See https://github.com/ododev/odo-backstage-software-template for an example of a Software Template making use of the Actions here.
 
 ### Example with the `odo init` action
 
