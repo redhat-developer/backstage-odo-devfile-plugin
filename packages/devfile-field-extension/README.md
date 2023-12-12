@@ -80,3 +80,5 @@ parameters:
           ui:options:
             rows: 5
 ```
+
+See https://github.com/ododev/odo-backstage-software-template for an example of a Software Template making use of the Devfile Selector Field Extension.
