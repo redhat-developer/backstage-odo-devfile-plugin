@@ -27,7 +27,8 @@ This behavior can be customized by adding a new `"odo"` field in your `packages/
 
 {
   "odo": {
-    // specifying the version is optional. You can also specify "latest" to use the latest version of odo
+    // specifying the version is optional.
+    // You can also specify "latest" to use the latest version of odo, or "nightly" to use the latest nightly build of odo.
     "version": "3.15.0",
     "skipDownload": false
   }

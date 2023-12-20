@@ -19,6 +19,7 @@ const hasha = require("hasha");
 const ODO_VERSION = "3.15.0";
 const ODO_DIST_URL =
   "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo";
+  const ODO_DIST_URL_NIGHTLY = "https://s3.eu-de.cloud-object-storage.appdomain.cloud/odo-nightly-builds";
 
 // Map of all architectures that can be donwloaded on the odo distribution URL.
 const SUPPORTED_ARCHITECTURES_BY_PLATFORM = new Map(
@@ -53,7 +54,7 @@ async function cachingFetchAndVerify(url, platform, arch, version) {
     fs.mkdirSync(cacheDir, { recursive: true });
   }
 
-  if (version === "latest" || !fs.existsSync(cachedFilePath)) {
+  if (version === "latest" || version === "nightly" || !fs.existsSync(cachedFilePath)) {
     console.info(`Downloading ${url} to ${cacheDir}`);
     // download file
     fs.writeFileSync(cachedFilePath, await got(url).buffer(), {
@@ -107,6 +108,11 @@ async function cachingFetchAndVerify(url, platform, arch, version) {
     case "darwin":
       fs.renameSync(path.join(parentCacheDir, `odo-${platform}-${arch}`), path.join(parentCacheDir, resultingFileName));
       break;
+    case "linux":
+      if (fs.existsSync(path.join(parentCacheDir, `odo-${platform}-${arch}`))) {
+        fs.renameSync(path.join(parentCacheDir, `odo-${platform}-${arch}`), path.join(parentCacheDir, resultingFileName));
+      }
+      break;
     default:
       break;
   }
@@ -148,12 +154,14 @@ function unpack(url, installPath, stream) {
  */
 async function download({ version, platform, arch }) {
   let versionToDl = version;
-  if (versionToDl !== "latest" && !versionToDl.startsWith("v")) {
+  if (versionToDl !== "latest" && versionToDl !== "nightly" && !versionToDl.startsWith("v")) {
     versionToDl = `v${version}`;
   }
-  const url = `${ODO_DIST_URL}/${versionToDl}/odo-${platform}-${arch}.${
-    platform === "windows" ? "exe.zip" : "tar.gz"
-  }`;
+  let url = `${ODO_DIST_URL}/${versionToDl}`;
+  if (versionToDl === "nightly") {
+    url = ODO_DIST_URL_NIGHTLY;
+  }
+  url += `/odo-${platform}-${arch}.${platform === "windows" ? "exe.zip" : "tar.gz"}`;
   return await cachingFetchAndVerify(url, platform, arch, version);
 }
 
